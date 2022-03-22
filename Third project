@@ -1,0 +1,89 @@
+import React, { Component, Fragment } from 'react'
+import { Table, Card } from "react-bootstrap";
+import { data } from '../data'
+
+export class index extends Component {
+    render() {
+        return (
+            <div>
+                <ProductTable />
+            </div>
+        )
+    }
+}
+
+export default index
+
+class ProductTable extends Component {
+    render() {
+        return (
+            <Card>
+                <Table bordered striped>
+                    <TableBody />
+                </Table>
+            </Card>
+        )
+    }
+}
+class Catergory extends Component {
+    render() {
+        let catergory = [];
+        let prevCatergory = null
+        const sort = data.forEach((elem, index) => {
+
+            if (elem.catergory !== prevCatergory) {
+                catergory = [...catergory, elem.catergory]
+            }
+            prevCatergory = elem.catergory
+        });
+        return (
+            <>
+                <TableBody catergory={catergory} />
+            </>
+        )
+    }
+}
+class TableBody extends Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+
+        }
+    }
+    render() {
+        return (
+            <>
+                <thead>
+                    <tr>
+                        <th>Catergory</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Completed</th>
+                        <th>Canceled</th>
+                        <th>Availability</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {
+                        data.map((item, index) => (
+                            <Fragment key={index}>
+                                <tr >
+                                    <td>{item.catergory}</td>
+                                    <td>{item.Title}</td>
+                                    <td>{item.Description}</td>
+                                    <td>{item.Completed ? 'true' : 'false'}</td>
+                                    <td>{item.Canceled ? 'true' : 'false'}</td>
+                                    <td>{item.Availablity}</td>
+
+
+                                </tr>
+                            </Fragment>
+                        ))
+                    }
+                </tbody>
+            </>
+        )
+    }
+}
